@@ -1,4 +1,6 @@
-﻿namespace WPF_MVVM_TEMPLATE.Application;
+﻿using System.Collections;
+
+namespace WPF_MVVM_TEMPLATE.Application;
 
 
 
@@ -23,7 +25,7 @@ public class FindSubnetMask
     /// <param name="numberOfSubnets"></param>
     /// <returns> returns the subnet mask dec value.
     /// returns -1 if number of subnets excites the maximum amount of subnets. or is invalid</returns>
-    public byte GetSubnetMaskDec(int numberOfSubnets)
+    public int GetSubnetMaskDec(int numberOfSubnets)
     {
 
         if (numberOfSubnets is >= 0 and <= 2)
@@ -59,5 +61,22 @@ public class FindSubnetMask
             return 0; 
         }
         
+    }
+
+    public BitArray GetSubnetMaskBinary(int subnetMask)
+    {
+        BitArray bitArray = new BitArray(8);
+        
+        bitArray[0] = (subnetMask & 128) != 0;
+        bitArray[1] = (subnetMask & 64)  != 0;
+        bitArray[2] = (subnetMask & 32)  != 0;
+        bitArray[3] = (subnetMask & 16)  != 0;
+        bitArray[4] = (subnetMask & 8)   != 0;
+        bitArray[5] = (subnetMask & 4)   != 0;
+        bitArray[6] = (subnetMask & 2)   != 0;
+        bitArray[7] = (subnetMask & 1)   != 0;
+
+        return bitArray; 
+
     }
 }

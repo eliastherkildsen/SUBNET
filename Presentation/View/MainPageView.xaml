@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:entitys="clr-namespace:WPF_MVVM_TEMPLATE.Entitys"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-
+    
     <StackPanel>
         
             
@@ -46,14 +47,18 @@
          <TextBox
              Text="{Binding NumSubNet}"/>
           
-            
-        
-        
-        
          
             <Button 
                 Content="Calculate subnet masks"
                 Command="{Binding CalculateSNM}"></Button>
-        </StackPanel>
+         
+            <TreeView
+                x:Name="TreeViewSBN"
+                ItemsSource="{Binding SbnList}"
+                Height="200">
+                
+            </TreeView>
+         
+    </StackPanel>
     
 </UserControl>

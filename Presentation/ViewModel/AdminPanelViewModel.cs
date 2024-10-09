@@ -1,6 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WPF_MVVM_TEMPLATE.Application;
+using WPF_MVVM_TEMPLATE.Entitys;
 
 namespace WPF_MVVM_TEMPLATE.Presentation.ViewModel;
 
@@ -11,7 +15,6 @@ public class AdminPanelViewModel : ViewModelBase
     private string _netid1;
     private string _netid2;
     private string _numSubNet;
-
     public string NetidCnt
     {
         get
@@ -64,6 +67,13 @@ public class AdminPanelViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    public ObservableCollection<TreeViewItem> SbnList { get; set; }
+
+
+    public AdminPanelViewModel()
+    {
+        SbnList = new ObservableCollection<TreeViewItem>(); 
+    }
     
     
     
@@ -72,23 +82,33 @@ public class AdminPanelViewModel : ViewModelBase
     public ICommand CalculateSNM => new CommandBase((Object commandPara) =>
     {
         {
-            
-            Debug.WriteLine("Add Network was called");
-            Debug.WriteLine($"NetIDCont {_netid1}");
-            Debug.WriteLine($"NetIDCont {_netid2}");
-            Debug.WriteLine($"num subnet {_numSubNet}");
-            
+
             
             FindSubnetMask fsnm = new FindSubnetMask();
-            byte _subnetMask = fsnm.GetSubnetMaskDec(int.Parse(_numSubNet));
+            int subnetMask = fsnm.GetSubnetMaskDec(int.Parse(_numSubNet));
             
-            Debug.WriteLine($"{_netid1}.{_netid2}.{_subnetMask}");
-
-
-            foreach (var VARIABLE in new FindHostIdForSnm(_subnetMask).GetAllValidHostIds(_subnetMask))
+            int cnt = 0;
+            foreach (bool bit in fsnm.GetSubnetMaskBinary(subnetMask))
             {
-                Debug.WriteLine($"{VARIABLE}");
+                if (bit)
+                {
+                    cnt++; 
+                }
             }
+
+            FindHostIdForSnm idForSnm = new FindHostIdForSnm(subnetMask); 
+            List<BitArray> bitArrays =  idForSnm.GenerateBitValues(cnt);
+            
+            
+            for (int i = 0; i < int.Parse(NumSubNet); i++)
+            {
+                int hostID = idForSnm.ConvertBitArrayToInt(bitArrays.ElementAt(i));  
+                var adress = new Subnet(int.Parse(Netid1), int.Parse(Netid2), subnetMask, hostID); 
+                TreeViewItem treeViewItem = new TreeViewItem();
+                treeViewItem.Header = adress.ToString(); 
+                SbnList.Add(treeViewItem);
+            }
+            
             
             
         }
