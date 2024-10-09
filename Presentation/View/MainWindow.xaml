@@ -11,7 +11,7 @@
     <Window.Resources>
 
         <DataTemplate x:Name="blueViewTemplate" DataType="{x:Type viewModels:AdminPanelViewModel}">
-            <views:AdminPanelView />
+            <views:MainPageView />
         </DataTemplate>
         
     </Window.Resources>

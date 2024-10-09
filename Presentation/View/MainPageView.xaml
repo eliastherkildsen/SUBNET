@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="WPF_MVVM_TEMPLATE.Presentation.View.MainPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <StackPanel>
+        
+            
+            <Label Content="IP address"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <TextBox 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    x:Name="TextBoxNetID1"
+                    Width="40"
+                    Text="{Binding Netid1}"/>
+
+                
+                <TextBox 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    x:Name="TextBoxNetID2"
+                    Width="40"             
+                    Text="{Binding Netid2}"/>
+                
+            </Grid>
+            
+        
+
+         <Label Content="number of subnets"></Label>
+         <TextBox
+             Text="{Binding NumSubNet}"/>
+          
+            
+        
+        
+        
+         
+            <Button 
+                Content="Calculate subnet masks"
+                Command="{Binding CalculateSNM}"></Button>
+        </StackPanel>
+    
+</UserControl>
